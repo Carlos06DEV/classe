@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha Sua Classe</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #f5f5dc;
+            font-family: 'Times New Roman', serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 3em;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px #000000;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background-color: #333333;
+            border: 2px solid #654321;
+            border-radius: 10px;
+            width: 300px;
+            margin: 15px;
+            padding: 15px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .card h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .card p {
+            font-size: 1em;
+            line-height: 1.4;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+        .selected {
+            border: 4px solid #ffcc00;
+            box-shadow: 0 0 15px #ffcc00;
+        }
+        #escolha {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #ffcc00;
+        }
+        /* Estilo do botão Próxima Página */
+        .proxima-pagina {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #f5f5dc;
+            background-color: #654321;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .proxima-pagina:hover {
+            background-color: #8B4513;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Escolha Sua Classe</h1>
+    <div class="container" id="classes-container">
+        <!-- Card 1 -->
+        <div class="card" data-classe="Guerreiro">
+            <img src="guerreiro.jpg" alt="Guerreiro">
+            <h2>Guerreiro</h2>
+            <p>Mestre das armas e da força bruta, o guerreiro é um defensor implacável no campo de batalha.</p>
+            <p>+2 Força. +1 Constituição</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="card" data-classe="Ladino">
+            <img src="ladino.jpg" alt="Ladino">
+            <h2>Ladino</h2>
+            <p>Habilidoso em furtividade e trapaças, o ladino é especialista em ataques surpresa e roubo.</p>
+            <p>+2 Destreza. Perícia: Furtividade</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="card" data-classe="Pirata">
+            <img src="pirata.jpg" alt="Pirata">
+            <h2>Pirata</h2>
+            <p>Navegador dos mares e saqueador de tesouros, o pirata vive à margem da lei.</p>
+            <p>+1 Destreza. +1 Carisma. Perícia: Navegação</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="card" data-classe="Druida">
+            <img src="druida.jpg" alt="Druida">
+            <h2>Druida</h2>
+            <p>Guardião da natureza, o druida possui poderes mágicos conectados aos elementos naturais.</p>
+            <p>+2 Sabedoria. Perícia: Resistência a Magia</p>
+        </div>
+        <!-- Card 5 -->
+        <div class="card" data-classe="Clérigo">
+            <img src="clerigo.jpg" alt="Clérigo">
+            <h2>Clérigo</h2>
+            <p>Servos divinos que curam e protegem, o clérigo é uma figura de apoio espiritual e físico.</p>
+            <p>+2 Sabedoria. +1 Constituição</p>
+        </div>
+        <!-- Card 6 -->
+        <div class="card" data-classe="Mago">
+            <img src="mago.jpg" alt="Mago">
+            <h2>Mago</h2>
+            <p>Manipulador de magia arcana, o mago domina poderosos feitiços e conhecimentos antigos.</p>
+            <p>+3 Inteligência</p>
+        </div>
+    </div>
+    <div id="escolha">Você ainda não escolheu uma classe.</div>
+
+    <!-- Botão Próxima Página -->
+    <a href="https://carlos06dev.github.io/rpg2/" class="proxima-pagina">Próxima Página</a>
+
+    <script>
+        // Variável para armazenar a escolha do usuário
+        let escolha = null;
+
+        // Função para lidar com o clique em um card
+        function selecionarClasse(event) {
+            const cardClicado = event.target.closest('.card'); // Encontra o card clicado
+            if (!cardClicado) return; // Sai se o clique não foi em um card
+
+            const classe = cardClicado.getAttribute('data-classe'); // Obtém o nome da classe do atributo data-classe
+
+            // Remove a classe "selected" de todos os cards
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('selected'));
+
+            // Adiciona a classe "selected" ao card clicado
+            cardClicado.classList.add('selected');
+
+            // Atualiza a escolha
+            escolha = classe;
+
+            localStorage.setItem('classe', classe);
+
+            // Exibe a escolha no elemento #escolha
+            document.getElementById('escolha').textContent = `Você escolheu: ${escolha}`;
+
+            // Aqui você pode fazer algo com a escolha, como enviá-la para um servidor ou usá-la em outra parte do código
+            console.log(`Classe escolhida: ${escolha}`);
+        }
+
+        // Adiciona o evento de clique ao container de classes
+        document.getElementById('classes-container').addEventListener('click', selecionarClasse);
+    </script>
+</body>
+</html>
